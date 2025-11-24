@@ -1,0 +1,11 @@
+.notes-grid {
+  display: flex;
+  flex-direction: column; 
+  gap: 0;
+  overflow-x: auto;
+}
+
+.notes-grid-row {
+  display: flex; 
+  gap: 0;
+}

@@ -1,20 +1,25 @@
 import type { Dispatch, SetStateAction } from "react";
 
-type MusicalNotes = "DO" | "RE" | "MI" | "FA" | "SOL" | "LA" | "TI";
+type NoteName = "DO" | "RE" | "MI" | "FA" | "SOL" | "LA" | "TI";
 
-type Instruments = "PIANO" | "SAXOPHONE";
+type Instrument = "PIANO" | "SAXOPHONE";
 
-type NoteSrc = Partial<Record<Instruments, Partial<Record<MusicalNotes, URL>>>>;
+type NoteAudioMap = Partial<
+  Record<Instrument, Partial<Record<NoteName, HTMLAudioElement>>>
+>;
 
-interface NoteProps {
+type NoteProps = {
   noteId: NoteId;
-  instruments: Instruments;
-  musicalNote: MusicalNotes;
+} & NoteState;
+
+interface NoteState {
+  isNoteOn?: boolean;
+  instrument: Instrument;
+  noteName: NoteName;
 }
 
-type IsNoteOn = boolean;
 type NoteId = string;
-type Notes = Record<NoteId, IsNoteOn>;
+type Notes = Record<NoteId, NoteState>;
 
 interface NotesContext {
   notes: Notes;
@@ -22,13 +27,22 @@ interface NotesContext {
   toggleIsOn: (noteId: NoteId) => void;
 }
 
+interface InstrumentContext {
+  instrument: Instrument;
+  setInstrument: Dispatch<SetStateAction<Instrument>>;
+}
+
+interface GridNotes {}
+
 export type {
   NoteProps,
   Notes,
-  MusicalNotes,
+  NoteName,
   NotesContext,
-  Instruments,
+  Instrument,
   NoteId,
-  NoteSrc,
-  IsNoteOn,
+  NoteAudioMap,
+  GridNotes,
+  NoteState,
+  InstrumentContext,
 };
