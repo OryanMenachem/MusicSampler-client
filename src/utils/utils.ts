@@ -1,4 +1,11 @@
-import type { NoteName, NoteAudioMap, Instrument } from "../types/types";
+import type {
+  NoteName,
+  NoteAudioMap,
+  Instrument,
+  Column,
+  NoteState,
+  Notes,
+} from "../types/types";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -35,5 +42,21 @@ function playAudio(instrument: Instrument, noteName: NoteName): void {
   audio.play();
 }
 
-const NoteNames: NoteName[] = ["TI", "LA", "SOL", "FA", "MI", "RE", "DO"];
-export { noteAudioMap, NoteNames, isNoteNameExists, playAudio };
+const NOTE_NAMES: NoteName[] = ["TI", "LA", "SOL", "FA", "MI", "RE", "DO"];
+const INSTRUMENTS: Instrument[] = ["PIANO", "SAXOPHONE"];
+
+const sortNotesByColumn = (notes: Notes) => {
+  return Object.values(notes).reduce((acc, note) => {
+    (acc[note.column] ||= []).push(note);
+    return acc;
+  }, {} as Record<Column, NoteState[]>);
+};
+
+export {
+  noteAudioMap,
+  NOTE_NAMES,
+  isNoteNameExists,
+  playAudio,
+  INSTRUMENTS,
+  sortNotesByColumn,
+};

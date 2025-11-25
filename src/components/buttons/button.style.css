@@ -1,0 +1,58 @@
+.controls-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: white;
+  height: 7.5rem;
+  border: 0.15rem solid var(--primary-color);
+  border-bottom:   0.3rem solid var(--primary-color);
+}
+
+.transport-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.column-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 5rem;
+  border: 0.15rem solid var(--primary-color);
+  cursor: pointer;
+  transition: all 0.02s ease;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.instrument-selector--btn {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.PIANO {
+  background-image: url("../../../public/piano.png");
+}
+
+.SAXOPHONE {
+  background-image: url("../../../public/saxophone.png");
+}
+.add-column--btn,
+.remove-column--btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+}
+.btn:hover {
+  transform: scale(1.01) translateY(-1px);
+  background-color: rgb(0, 128, 148, 0.3);
+}

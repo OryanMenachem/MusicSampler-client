@@ -1,37 +1,30 @@
-import { useContext, useEffect, useState } from "react";
-import { notesContext, instrumentContext } from "../contexts/Contexts";
+import { useContext, useEffect } from "react";
+import { notesContext } from "../contexts/Notes.context";
 import type {
-  NotesContext,
   NoteId,
-  Notes,
   NoteState,
   NoteName,
   Instrument,
-  InstrumentContext,
+  NotesContext,
+  Column,
 } from "../types/types";
 
-const useGetNotesContext = (): NotesContext => {
-  const context = useContext(notesContext);
-  if (!context) {
-    throw Error("notesContext is null");
-  }
-  return context;
-};
-
-const useGetInstrumentContext = (): InstrumentContext => {
-  const context = useContext(instrumentContext);
-  if (!context) {
-    throw Error("instrumentContext is null");
-  }
-  return context;
-};
+// import { contextMap } from "../utils/utils";
+// const useGetContext = (contextName : string) => {
+//   const context = useContext(contextMap[contextName]);
+//   if (!context) {
+//     throw Error(`${contextName} is null`);
+//   }
+//   return context;
+// };
 
 const useAddNote = (
   noteId: NoteId,
   instrument: Instrument,
-  noteName: NoteName
+  noteName: NoteName,
+  column: Column
 ): NoteState => {
-  const { notes, setNotes } = useGetNotesContext();
+  const { notes, setNotes } = useContext(notesContext) as NotesContext;
   useEffect(() => {
     setNotes((prev) => {
       if (prev[noteId]) return prev;
@@ -39,8 +32,9 @@ const useAddNote = (
         ...prev,
         [noteId]: {
           isNoteOn: false,
-          instrument: instrument,
-          noteName: noteName,
+          instrument,
+          noteName,
+          column,
         },
       };
     });
@@ -49,19 +43,6 @@ const useAddNote = (
   return notes[noteId];
 };
 
-const useGetNotesContextValue = () => {
-  const [notes, setNotes] = useState<Notes>({});
-  const toggleIsOn = (noteId: NoteId) => {
-    setNotes((prev) => ({
-      ...prev,
-      [noteId]: {
-        ...prev[noteId],
-        isNoteOn: !prev[noteId].isNoteOn,
-      },
-    }));
-  };
 
-  return { notes, setNotes, toggleIsOn };
-};
 
-export { useAddNote, useGetNotesContext, useGetNotesContextValue , useGetInstrumentContext};
+export { useAddNote  };

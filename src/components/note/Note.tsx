@@ -1,17 +1,19 @@
-import type { NoteProps } from "../../types/types";
-import { useRef } from "react";
-import { useGetNotesContext, useAddNote } from "../../hooks/hooks";
+import type { NoteProps, NotesContext } from "../../types/types";
+import { useContext, useRef } from "react";
+import { useAddNote } from "../../hooks/hooks";
 import { playAudio } from "../../utils/utils";
 import "./note.style.css";
+import { notesContext } from "../../contexts/Notes.context";
 
 export default function Note({
   noteId,
   instrument,
   noteName,
+  column,
 }: NoteProps): React.JSX.Element {
-  const { toggleIsOn } = useGetNotesContext();
+  const { toggleIsOn } = useContext(notesContext) as NotesContext;
   const noteRef = useRef<HTMLDivElement>(null);
-  const currentNote = useAddNote(noteId, instrument, noteName);
+  const currentNote = useAddNote(noteId, instrument, noteName, column);
   if (!currentNote) return <></>;
   const noteClassName = `note ${currentNote.isNoteOn ? noteName : "note-off"}`;
 
