@@ -1,19 +1,19 @@
-import { useState, useContext, useRef } from "react";
-import { notesContext } from "../../../contexts/Notes.context";
-import type { NotesContext } from "../../../types/types";
-import { handlePlayToggle } from "../button.service";
+import { useGetContext, usePlayer } from "../../../hooks";
+import type { ControlsPlayerContext, NotesContext } from "../../../types/types";
+
 export default function PlayToggleBtn(): React.JSX.Element {
-  const [play, setPlay] = useState(false);
-  const { notes } = useContext(notesContext) as NotesContext;
-  const abortedRef = useRef({ aborted: false });
-
-  //   useEffect(() => {}, [play, notes]);
-
+  const { isPlay, setIsPlay, isLoop } = useGetContext(
+    "controlsPlayerContext"
+  ) as ControlsPlayerContext;
+  const { notes } = useGetContext("notesContext") as NotesContext;
+  usePlayer({ notes, isPlay, isLoop });
+  const className = `btn play-toggle--btn ${isPlay ? "play" : "stop"}`;
+  const handleClick = () => {
+    setIsPlay((prev) => !prev);
+    console.log(isPlay);
+  };
   return (
-    <button
-      className="btn play-toggle--btn"
-      onClick={() => handlePlayToggle({ notes, abortedRef })}
-    >
+    <button className={className} onClick={handleClick}>
       Play
     </button>
   );

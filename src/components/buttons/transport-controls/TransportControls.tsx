@@ -1,7 +1,4 @@
-import PlayToggleBtn from "./PlayToggleBtn";
-import LoopToggleBtn from "./LoopToggleBtn";
-import RestartBtn from "./RestartBtn";
-import ResetBtn from "./ResetBtn";
+import { PlayToggleBtn, LoopToggleBtn, RestartBtn, ResetBtn } from "./index";
 
 export default function TransportControls(): React.JSX.Element {
   return (

@@ -1,6 +1,10 @@
-import InstrumentProvider from "./Instrument.context";
-import ColumnsProvider from "./Columns.context";
-import NotesProvider from "./Notes.context";
+import {
+  NotesProvider,
+  ColumnsProvider,
+  ControlsPlayerProvider,
+  InstrumentProvider,
+  ActiveColumnProvider,
+} from "./index";
 
 export default function AppProviders({
   children,
@@ -8,10 +12,14 @@ export default function AppProviders({
   children: React.ReactNode;
 }) {
   return (
-    <InstrumentProvider>
-      <ColumnsProvider>
-        <NotesProvider>{children}</NotesProvider>
-      </ColumnsProvider>
-    </InstrumentProvider>
+    <ActiveColumnProvider>
+      <InstrumentProvider>
+        <ColumnsProvider>
+          <ControlsPlayerProvider>
+            <NotesProvider>{children}</NotesProvider>
+          </ControlsPlayerProvider>
+        </ColumnsProvider>
+      </InstrumentProvider>
+    </ActiveColumnProvider>
   );
 }

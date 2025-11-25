@@ -1,12 +1,12 @@
-import { useState, useContext } from "react";
-import { instrumentContext } from "../../../contexts/Instrument.context";
+import { useState } from "react";
+import { useGetContext } from "../../../hooks/";
 import type { InstrumentContext } from "../../../types/types";
 import { INSTRUMENTS } from "../../../utils/utils";
 
 export default function InstrumentSelectorBtn(): React.JSX.Element {
   const [currentInstrument, setCurrentInstrument] = useState<number>(0);
-  const { instrument, setInstrument } = useContext(
-    instrumentContext
+  const { instrument, setInstrument } = useGetContext(
+    "instrumentContext"
   ) as InstrumentContext;
   const instrumentSelectorClassName = `btn instrument-selector--btn ${instrument}`;
   const handleClick = () => {

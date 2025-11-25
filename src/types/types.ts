@@ -12,10 +12,10 @@ type IsNoteOn = boolean;
 type Column = number;
 type NoteId = string;
 type Notes = Record<NoteId, NoteState>;
-type ActiveColumn = "activeColumn";
-
+type IsActive = boolean;
 type NoteProps = {
   noteId: NoteId;
+  isActive?: IsActive;
 } & NoteState;
 
 interface NoteState {
@@ -38,6 +38,25 @@ interface InstrumentContext {
   setInstrument: Dispatch<SetStateAction<Instrument>>;
 }
 
+type IsLoop = boolean;
+type SetIsLoop = Dispatch<SetStateAction<boolean>>;
+type IsPlay = boolean;
+type SetIsPlay = Dispatch<SetStateAction<boolean>>;
+
+interface ControlsPlayerContext {
+  isLoop: IsLoop;
+  setIsLoop: SetIsLoop;
+  isPlay: IsPlay;
+  setIsPlay: SetIsPlay;
+}
+type ActiveColumn = number | null;
+type SetActiveColumn = Dispatch<SetStateAction<ActiveColumn | null>>;
+
+interface ActiveColumnContext {
+  activeColumn: ActiveColumn;
+  setActiveColumn: SetActiveColumn;
+}
+
 interface HandleRemoveColumnArgs {
   notes: Notes;
   setNotes: Dispatch<SetStateAction<Notes>>;
@@ -45,13 +64,25 @@ interface HandleRemoveColumnArgs {
   setColumns: Dispatch<SetStateAction<Column>>;
 }
 
-interface HandlePlayToggleArgs {
+interface UsePlayerProps {
   notes: Notes;
-  abortedRef: React.RefObject<{
-    aborted: boolean;
-  }>;
+  isLoop?: IsLoop;
+  isPlay: IsPlay;
 }
-interface GridNotes {}
+
+type ContextName =
+  | "instrumentContext"
+  | "columnsContext"
+  | "notesContext"
+  | "controlsPlayerContext"
+  | "activeColumnContext";
+
+type Contexs =
+  | NotesContext
+  | ColumnsContext
+  | InstrumentContext
+  | ControlsPlayerContext
+  | ActiveColumnContext;
 
 export type {
   NoteProps,
@@ -61,11 +92,15 @@ export type {
   Instrument,
   NoteId,
   NoteAudioMap,
-  GridNotes,
   NoteState,
   InstrumentContext,
   ColumnsContext,
   HandleRemoveColumnArgs,
   Column,
-  HandlePlayToggleArgs,
+  ContextName,
+  Contexs,
+  ControlsPlayerContext,
+  UsePlayerProps,
+  ActiveColumnContext,
+  ActiveColumn,
 };

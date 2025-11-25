@@ -19,6 +19,7 @@ const noteAudioMap: NoteAudioMap = {
     LA: new Audio(`${SERVER_URL}PIANO/LA-6.mp3`),
     TI: new Audio(`${SERVER_URL}PIANO/TI-6.mp3`),
   },
+  SAXOPHONE: {},
 };
 
 function isInstrumentExists(instrument: Instrument): boolean {
@@ -34,7 +35,7 @@ function isNoteNameExists(instrument: Instrument, noteName: NoteName): boolean {
 
 function playAudio(instrument: Instrument, noteName: NoteName): void {
   if (!isNoteNameExists(instrument, noteName)) {
-    throw Error("Note name  dose not exists in noteAudioMap");
+    throw Error("Note name does not exist in noteAudioMap");
   }
   const audio = noteAudioMap[instrument]![
     noteName
