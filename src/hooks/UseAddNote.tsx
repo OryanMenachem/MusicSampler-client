@@ -25,7 +25,7 @@ export default function useAddNote(
           isNoteOn: false,
           instrument,
           noteName,
-          column,
+          columnCount: column,
         },
       };
     });

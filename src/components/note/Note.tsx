@@ -8,7 +8,7 @@ export default function Note({
   noteId,
   instrument,
   noteName,
-  column,
+  columnCount: column,
   isActive,
 }: NoteProps): React.JSX.Element {
   const { toggleIsOn } = useGetContext("notesContext") as NotesContext;

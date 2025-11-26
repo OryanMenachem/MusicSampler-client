@@ -6,7 +6,7 @@
   background-color: white;
   height: 7.5rem;
   border: 0.15rem solid var(--primary-color);
-  border-bottom:   0.3rem solid var(--primary-color);
+  border-bottom: 0.3rem solid var(--primary-color);
 }
 
 .transport-controls {
@@ -29,12 +29,14 @@
   font-size: 0.9rem;
   font-weight: bold;
   color: var(--primary-color);
-}
-
-.instrument-selector--btn {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+/* 
+.instrument-selector--btn {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+} */
 .PIANO {
   background-image: url("../../../public/piano.png");
 }
@@ -55,4 +57,15 @@
 .btn:hover {
   transform: scale(1.01) translateY(-1px);
   background-color: rgb(0, 128, 148, 0.2);
+}
+
+.loop-on {
+  background-image: url("../../../public/pause.png");
+}
+
+.play-toggle--btn.play {
+  background-image: url("../../../public/play-button\ \(2\).png");
+}
+.play-toggle--btn.stop {
+  background-image: url("../../../public/pause.png");
 }

@@ -9,10 +9,14 @@ type NoteAudioMap = Partial<
 >;
 
 type IsNoteOn = boolean;
-type Column = number;
+type ColumnCount = number;
 type NoteId = string;
 type Notes = Record<NoteId, NoteState>;
 type IsActive = boolean;
+type SetColumnCount = Dispatch<SetStateAction<ColumnCount>>;
+type CurrentColumn = number;
+type SetCurrentColumn = Dispatch<SetStateAction<CurrentColumn>>;
+
 type NoteProps = {
   noteId: NoteId;
   isActive?: IsActive;
@@ -22,16 +26,25 @@ interface NoteState {
   isNoteOn?: IsNoteOn;
   instrument: Instrument;
   noteName: NoteName;
-  column: Column;
+  columnCount: ColumnCount;
 }
+
+type Restart = boolean;
+type SetRestart = Dispatch<SetStateAction<Restart>>;
+
+interface RestartContext {
+  restart: Restart;
+  setRestart: SetRestart;
+}
+
 interface NotesContext {
   notes: Notes;
   setNotes: Dispatch<SetStateAction<Notes>>;
   toggleIsOn: (noteId: NoteId) => void;
 }
 interface ColumnsContext {
-  columns: Column;
-  setColumns: Dispatch<SetStateAction<Column>>;
+  columnCount: ColumnCount;
+  setColumnCount: SetColumnCount;
 }
 interface InstrumentContext {
   instrument: Instrument;
@@ -40,34 +53,34 @@ interface InstrumentContext {
 
 type IsLoop = boolean;
 type SetIsLoop = Dispatch<SetStateAction<boolean>>;
-type IsPlay = boolean;
-type SetIsPlay = Dispatch<SetStateAction<boolean>>;
+type IsPlaying = boolean;
+type SetIsPlaying = Dispatch<SetStateAction<boolean>>;
 
 interface ControlsPlayerContext {
   isLoop: IsLoop;
   setIsLoop: SetIsLoop;
-  isPlay: IsPlay;
-  setIsPlay: SetIsPlay;
+  isPlaying: IsPlaying;
+  setIsPlaying: SetIsPlaying;
 }
-type ActiveColumn = number | null;
-type SetActiveColumn = Dispatch<SetStateAction<ActiveColumn | null>>;
+type ActiveColumnIndex = number | null;
+type SetActiveColumnIndex = Dispatch<SetStateAction<ActiveColumnIndex | null>>;
 
 interface ActiveColumnContext {
-  activeColumn: ActiveColumn;
-  setActiveColumn: SetActiveColumn;
+  activeColumnIndex: ActiveColumnIndex;
+  setActiveColumnIndex: SetActiveColumnIndex;
 }
 
 interface HandleRemoveColumnArgs {
   notes: Notes;
   setNotes: Dispatch<SetStateAction<Notes>>;
-  columns: Column;
-  setColumns: Dispatch<SetStateAction<Column>>;
+  columns: ColumnCount;
+  setColumns: Dispatch<SetStateAction<ColumnCount>>;
 }
 
 interface UsePlayerProps {
-  notes: Notes;
+  notes?: Notes;
   isLoop?: IsLoop;
-  isPlay: IsPlay;
+  isPlaying: IsPlaying;
 }
 
 type ContextName =
@@ -75,16 +88,19 @@ type ContextName =
   | "columnsContext"
   | "notesContext"
   | "controlsPlayerContext"
-  | "activeColumnContext";
+  | "activeColumnContext"
+  | "restartContext";
 
 type Contexs =
   | NotesContext
   | ColumnsContext
   | InstrumentContext
   | ControlsPlayerContext
-  | ActiveColumnContext;
+  | ActiveColumnContext
+  | RestartContext;
 
 export type {
+  RestartContext,
   NoteProps,
   Notes,
   NoteName,
@@ -96,11 +112,11 @@ export type {
   InstrumentContext,
   ColumnsContext,
   HandleRemoveColumnArgs,
-  Column,
+  ColumnCount as Column,
   ContextName,
   Contexs,
   ControlsPlayerContext,
   UsePlayerProps,
   ActiveColumnContext,
-  ActiveColumn,
+  ActiveColumnIndex as ActiveColumn,
 };

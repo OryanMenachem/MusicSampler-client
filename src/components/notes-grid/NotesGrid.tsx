@@ -12,8 +12,10 @@ export default function NotesGrid() {
   const { instrument } = useGetContext(
     "instrumentContext"
   ) as InstrumentContext;
-  const { columns } = useGetContext("columnsContext") as ColumnsContext;
-  const { activeColumn } = useGetContext(
+  const { columnCount: columns } = useGetContext(
+    "columnsContext"
+  ) as ColumnsContext;
+  const { activeColumnIndex: activeColumn } = useGetContext(
     "activeColumnContext"
   ) as ActiveColumnContext;
   return (
@@ -28,7 +30,7 @@ export default function NotesGrid() {
                 noteId={`${note}-${i}`}
                 instrument={instrument}
                 noteName={n}
-                column={i + 1}
+                columnCount={i + 1}
                 isActive={activeColumn === i + 1}
               />
             ))}

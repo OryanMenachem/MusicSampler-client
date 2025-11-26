@@ -2,7 +2,9 @@ import { useGetContext } from "../../../hooks";
 import type { ColumnsContext } from "../../../types/types";
 
 export default function AddColumnBtn(): React.JSX.Element {
-  const { setColumns } = useGetContext("columnsContext") as ColumnsContext;
+  const { setColumnCount: setColumns } = useGetContext(
+    "columnsContext"
+  ) as ColumnsContext;
   const plusSign = "+";
   return (
     <button

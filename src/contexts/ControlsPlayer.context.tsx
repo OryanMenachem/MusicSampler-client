@@ -1,4 +1,4 @@
-import { createContext,  useState } from "react";
+import { createContext, useState } from "react";
 import type { ControlsPlayerContext } from "../types/types";
 
 export const controlsPlayerContext =
@@ -12,7 +12,9 @@ export default function ControlsPlayerProvider({
   const [isLoop, setIsLoop] = useState(false);
   const [isPlay, setIsPlay] = useState<boolean>(false);
   return (
-    <controlsPlayerContext.Provider value={{ isLoop, setIsLoop, isPlay, setIsPlay }}>
+    <controlsPlayerContext.Provider
+      value={{ isLoop, setIsLoop, isPlaying: isPlay, setIsPlaying: setIsPlay }}
+    >
       {children}
     </controlsPlayerContext.Provider>
   );

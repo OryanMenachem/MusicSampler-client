@@ -48,7 +48,7 @@ const INSTRUMENTS: Instrument[] = ["PIANO", "SAXOPHONE"];
 
 const sortNotesByColumn = (notes: Notes) => {
   return Object.values(notes).reduce((acc, note) => {
-    (acc[note.column] ||= []).push(note);
+    (acc[note.columnCount] ||= []).push(note);
     return acc;
   }, {} as Record<Column, NoteState[]>);
 };

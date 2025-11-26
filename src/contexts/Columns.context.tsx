@@ -11,7 +11,9 @@ export default function ColumnsProvider({
   const initialColumns = 32;
   const [columns, setColumns] = useState(initialColumns);
   return (
-    <columnsContext.Provider value={{ columns, setColumns }}>
+    <columnsContext.Provider
+      value={{ columnCount: columns, setColumnCount: setColumns }}
+    >
       {children}
     </columnsContext.Provider>
   );

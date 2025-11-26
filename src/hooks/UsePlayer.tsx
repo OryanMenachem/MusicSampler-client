@@ -1,18 +1,27 @@
 import { useEffect } from "react";
 import { sortNotesByColumn, playAudio } from "../utils/utils";
-import type { ActiveColumnContext, UsePlayerProps } from "../types/types";
+import type {
+  ActiveColumnContext,
+  RestartContext,
+  UsePlayerProps,
+} from "../types/types";
 import useGetContext from "./UseGetContext";
 
-export default function usePlayer({ notes, isLoop, isPlay }: UsePlayerProps) {
-  const { setActiveColumn } = useGetContext(
+export default function usePlayer({
+  notes,
+  isLoop,
+  isPlaying,
+}: UsePlayerProps) {
+  const { setActiveColumnIndex: setActiveColumn } = useGetContext(
     "activeColumnContext"
   ) as ActiveColumnContext;
+  const { restart } = useGetContext("restartContext") as RestartContext;
 
   useEffect(() => {
-    if (!isPlay) return;
+    if (!isPlaying) return;
     let cancelled = false;
     const runPlay = async () => {
-      const sortedNotesColumn = sortNotesByColumn(notes);
+      const sortedNotesColumn = sortNotesByColumn(notes!);
       do {
         for (const column in sortedNotesColumn) {
           if (cancelled) return;
@@ -33,5 +42,5 @@ export default function usePlayer({ notes, isLoop, isPlay }: UsePlayerProps) {
     return () => {
       cancelled = true;
     };
-  }, [isLoop, isPlay]);
+  }, [isPlaying, restart]);
 }

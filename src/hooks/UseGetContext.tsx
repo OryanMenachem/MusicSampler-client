@@ -5,6 +5,7 @@ import {
   columnsContext,
   controlsPlayerContext,
   activeColumnContext,
+  restartContext,
 } from "../contexts/index";
 import type { Contexs, ContextName } from "../types/types";
 
@@ -15,6 +16,7 @@ export default function useGetContext(contextName: ContextName): Contexs {
     notesContext: useContext(notesContext),
     controlsPlayerContext: useContext(controlsPlayerContext),
     activeColumnContext: useContext(activeColumnContext),
+    restartContext: useContext(restartContext),
   };
   const context = contextsMap[contextName];
   if (!context) {
