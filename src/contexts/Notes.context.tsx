@@ -1,17 +1,14 @@
 import { createContext, useState } from "react";
 import type { NotesContext, Notes, NoteId } from "../types/types";
 
-const notesContext = createContext<NotesContext | null>(null);
+export const notesContext = createContext<NotesContext | null>(null);
 
-function NotesProvider({ children }: { children: React.ReactNode }) {
-  const [notes, setNotes] = useState<Notes>({});
-  const toggleIsOn = (noteId: NoteId) => {
-    setNotes((prev) => ({
-      ...prev,
-      [noteId]: !prev[noteId],
-    }));
-  };
-
+export default function NotesProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { notes, setNotes, toggleIsOn } = useGetNotesContextValue();
   return (
     <notesContext.Provider value={{ notes, setNotes, toggleIsOn }}>
       {children}
@@ -19,4 +16,17 @@ function NotesProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-export { notesContext, NotesProvider };
+const useGetNotesContextValue = () => {
+  const [notes, setNotes] = useState<Notes>({});
+  const toggleIsOn = (noteId: NoteId) => {
+    setNotes((prev) => ({
+      ...prev,
+      [noteId]: {
+        ...prev[noteId],
+        isNoteOn: !prev[noteId].isNoteOn,
+      },
+    }));
+  };
+
+  return { notes, setNotes, toggleIsOn };
+};

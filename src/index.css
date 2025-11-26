@@ -1,13 +1,13 @@
 :root {
   --bg-color: white;
   --primary-color: #008094;
-  --DO-color: #fb4455;
-  --RE-color: #52bd7e;
-  --MI-color: #ffd45b;
-  --FA-color: #fb4996;
-  --SOL-color: #4499fb;
-  --LA-color: #1dba15;
-  --TI-color: #44fbd3;
+  --DO-color: #ff6b6b;
+  --RE-color: #dc6bff;
+  --MI-color: #feca57;
+  --FA-color: #48dbfb;
+  --SOL-color: #1dd1a1;
+  --LA-color: #8e44fd;
+  --TI-color: #ff6fff;
 }
 
 * {

@@ -1,0 +1,20 @@
+.notes-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow-x: auto;
+  border: 0.15rem solid var(--primary-color);
+}
+
+.notes-grid-row {
+  display: flex;
+  gap: 0;
+}
+
+.column-hover {
+  background-color: #35a5b6;
+}
+
+.active-column {
+  background-color: rgb(0, 128, 148, 0.3);
+}

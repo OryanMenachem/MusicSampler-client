@@ -1,43 +1,38 @@
-import type { NoteProps } from "../../types/types";
+import type { NoteProps, NotesContext } from "../../types/types";
+import { useGetContext, useAddNote } from "../../hooks";
 import { useRef } from "react";
-import { useGetNotesContext, useGetNote } from "../../hooks/hooks";
-import { getNoteSrc } from "./note.service";
-import "./note.css";
+import { playAudio } from "../../utils/utils";
+import "./note.style.css";
 
 export default function Note({
   noteId,
-  instruments,
-  musicalNote,
+  instrument,
+  noteName,
+  columnCount: column,
+  isActive,
 }: NoteProps): React.JSX.Element {
-  const { toggleIsOn } = useGetNotesContext();
+  const { toggleIsOn } = useGetContext("notesContext") as NotesContext;
   const noteRef = useRef<HTMLDivElement>(null);
-  const isNoteOn = useGetNote(noteId);
-  const noteSrc = getNoteSrc(instruments, musicalNote);
+  const currentNote = useAddNote(noteId, instrument, noteName, column);
+  if (!currentNote) return <></>;
+  const noteClassName = `note ${currentNote.isNoteOn ? noteName : "note-off"} ${
+    isActive ? "active" : ""
+  }`;
 
-  const toggleNote = () => {
-    if (noteRef.current) {
-      toggleIsOn(noteRef.current.id);
-      const audio = noteRef.current?.querySelector("audio") as HTMLAudioElement;
-      if (!isNoteOn) {
-        noteRef.current.classList.replace("note-off", musicalNote);
-        audio.play();
-      } else {
-        noteRef.current.classList.replace(musicalNote, "note-off");
-        audio.load();
-      }
-    } else {
+  const handleNoteClick = () => {
+    if (!noteRef.current) {
       throw Error("Current noteRef dose not exists");
     }
+    !currentNote.isNoteOn && playAudio(instrument, noteName);
+    toggleIsOn(noteId);
   };
 
   return (
     <div
       id={noteId}
       ref={noteRef}
-      className="note note-off"
-      onClick={toggleNote}
-    >
-      <audio src={noteSrc} preload="auto"></audio>
-    </div>
+      className={noteClassName}
+      onClick={handleNoteClick}
+    ></div>
   );
 }

@@ -1,34 +1,122 @@
 import type { Dispatch, SetStateAction } from "react";
 
-type MusicalNotes = "DO" | "RE" | "MI" | "FA" | "SOL" | "LA" | "TI";
+type NoteName = "DO" | "RE" | "MI" | "FA" | "SOL" | "LA" | "TI";
 
-type Instruments = "PIANO" | "SAXOPHONE";
+type Instrument = "PIANO" | "SAXOPHONE";
 
-type NoteSrc = Partial<Record<Instruments, Partial<Record<MusicalNotes, URL>>>>;
-
-interface NoteProps {
-  noteId: NoteId;
-  instruments: Instruments;
-  musicalNote: MusicalNotes;
-}
+type NoteAudioMap = Partial<
+  Record<Instrument, Partial<Record<NoteName, HTMLAudioElement>>>
+>;
 
 type IsNoteOn = boolean;
+type ColumnCount = number;
 type NoteId = string;
-type Notes = Record<NoteId, IsNoteOn>;
+type Notes = Record<NoteId, NoteState>;
+type IsActive = boolean;
+type SetColumnCount = Dispatch<SetStateAction<ColumnCount>>;
+type CurrentColumn = number;
+type SetCurrentColumn = Dispatch<SetStateAction<CurrentColumn>>;
+
+type NoteProps = {
+  noteId: NoteId;
+  isActive?: IsActive;
+} & NoteState;
+
+interface NoteState {
+  isNoteOn?: IsNoteOn;
+  instrument: Instrument;
+  noteName: NoteName;
+  columnCount: ColumnCount;
+}
+
+type Restart = boolean;
+type SetRestart = Dispatch<SetStateAction<Restart>>;
+
+interface RestartContext {
+  restart: Restart;
+  setRestart: SetRestart;
+}
 
 interface NotesContext {
   notes: Notes;
   setNotes: Dispatch<SetStateAction<Notes>>;
   toggleIsOn: (noteId: NoteId) => void;
 }
+interface ColumnsContext {
+  columnCount: ColumnCount;
+  setColumnCount: SetColumnCount;
+}
+interface InstrumentContext {
+  instrument: Instrument;
+  setInstrument: Dispatch<SetStateAction<Instrument>>;
+}
+
+type IsLoop = boolean;
+type SetIsLoop = Dispatch<SetStateAction<boolean>>;
+type IsPlaying = boolean;
+type SetIsPlaying = Dispatch<SetStateAction<boolean>>;
+
+interface ControlsPlayerContext {
+  isLoop: IsLoop;
+  setIsLoop: SetIsLoop;
+  isPlaying: IsPlaying;
+  setIsPlaying: SetIsPlaying;
+}
+type ActiveColumnIndex = number | null;
+type SetActiveColumnIndex = Dispatch<SetStateAction<ActiveColumnIndex | null>>;
+
+interface ActiveColumnContext {
+  activeColumnIndex: ActiveColumnIndex;
+  setActiveColumnIndex: SetActiveColumnIndex;
+}
+
+interface HandleRemoveColumnArgs {
+  notes: Notes;
+  setNotes: Dispatch<SetStateAction<Notes>>;
+  columns: ColumnCount;
+  setColumns: Dispatch<SetStateAction<ColumnCount>>;
+}
+
+interface UsePlayerProps {
+  notes?: Notes;
+  isLoop?: IsLoop;
+  isPlaying: IsPlaying;
+}
+
+type ContextName =
+  | "instrumentContext"
+  | "columnsContext"
+  | "notesContext"
+  | "controlsPlayerContext"
+  | "activeColumnContext"
+  | "restartContext";
+
+type Contexs =
+  | NotesContext
+  | ColumnsContext
+  | InstrumentContext
+  | ControlsPlayerContext
+  | ActiveColumnContext
+  | RestartContext;
 
 export type {
+  RestartContext,
   NoteProps,
   Notes,
-  MusicalNotes,
+  NoteName,
   NotesContext,
-  Instruments,
+  Instrument,
   NoteId,
-  NoteSrc,
-  IsNoteOn,
+  NoteAudioMap,
+  NoteState,
+  InstrumentContext,
+  ColumnsContext,
+  HandleRemoveColumnArgs,
+  ColumnCount as Column,
+  ContextName,
+  Contexs,
+  ControlsPlayerContext,
+  UsePlayerProps,
+  ActiveColumnContext,
+  ActiveColumnIndex as ActiveColumn,
 };
