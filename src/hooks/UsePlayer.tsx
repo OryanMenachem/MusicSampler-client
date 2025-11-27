@@ -1,40 +1,36 @@
 import { useEffect } from "react";
 import { sortNotesByColumn, playAudio } from "../utils/utils";
-import type {
-  ActiveColumnContext,
-  RestartContext,
-  UsePlayerProps,
-} from "../types/types";
+import type { InstrumentContext, NotesContext } from "../types/types";
 import useGetContext from "./UseGetContext";
+import type { TransportControlsContext } from "../contexts/context/TransportControls.context";
 
-export default function usePlayer({
-  notes,
-  isLoop,
-  isPlaying,
-}: UsePlayerProps) {
-  const { setActiveColumnIndex: setActiveColumn } = useGetContext(
-    "activeColumnContext"
-  ) as ActiveColumnContext;
-  const { restart } = useGetContext("restartContext") as RestartContext;
+export default function usePlayer() {
+  const { state, dispatch } = useGetContext(
+    "transportControlsContext"
+  ) as TransportControlsContext;
+  const { notes } = useGetContext("notesContext") as NotesContext;
+  const { instrument } = useGetContext(
+    "instrumentContext"
+  ) as InstrumentContext;
 
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!state.isPlaying && !state.isLooping) return;
     let cancelled = false;
     const runPlay = async () => {
       const sortedNotesColumn = sortNotesByColumn(notes!);
       do {
         for (const column in sortedNotesColumn) {
           if (cancelled) return;
-          setActiveColumn(Number(column));
           const notesColumn = sortedNotesColumn[column];
+          dispatch({ type: "SET_ACTIVE_COLUMN", payload: Number(column) });
           for (const note of notesColumn) {
             if (!note.isNoteOn) continue;
-            playAudio(note.instrument, note.noteName);
+            playAudio(instrument, note.noteName);
           }
           await new Promise((res) => setTimeout(res, 250));
         }
-      } while (isLoop && !cancelled);
-      setActiveColumn(null);
+      } while (state.isLooping && !cancelled);
+      dispatch({ type: "SET_ACTIVE_COLUMN", payload: 0 });
     };
 
     runPlay();
@@ -42,5 +38,5 @@ export default function usePlayer({
     return () => {
       cancelled = true;
     };
-  }, [isPlaying, restart]);
+  }, [state.isPlaying, state.restart, state.isLooping]);
 }

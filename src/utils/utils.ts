@@ -2,7 +2,7 @@ import type {
   NoteName,
   NoteAudioMap,
   Instrument,
-  Column,
+  ColumnCount,
   NoteState,
   Notes,
 } from "../types/types";
@@ -20,6 +20,24 @@ const noteAudioMap: NoteAudioMap = {
     TI: new Audio(`${SERVER_URL}PIANO/TI-6.mp3`),
   },
   SAXOPHONE: {},
+  GUITAR: {
+    DO: new Audio(`${SERVER_URL}GUITAR/DO-3.flac`),
+    RE: new Audio(`${SERVER_URL}GUITAR/RE-3.flac`),
+    MI: new Audio(`${SERVER_URL}GUITAR/MI-3.flac`),
+    FA: new Audio(`${SERVER_URL}GUITAR/FA-3.flac`),
+    SOL: new Audio(`${SERVER_URL}GUITAR/SOL-3.flac`),
+    LA: new Audio(`${SERVER_URL}GUITAR/LA-3.flac`),
+    TI: new Audio(`${SERVER_URL}GUITAR/TI-3.flac`),
+  },
+  KALIMBA: {
+    DO: new Audio(`${SERVER_URL}KALIMBA/DO_03.wav`),
+    RE: new Audio(`${SERVER_URL}KALIMBA/RE_03.wav`),
+    MI: new Audio(`${SERVER_URL}KALIMBA/MI_03.wav`),
+    FA: new Audio(`${SERVER_URL}KALIMBA/FA_03.wav`),
+    SOL: new Audio(`${SERVER_URL}KALIMBA/SOL_03.wav`),
+    LA: new Audio(`${SERVER_URL}KALIMBA/LA_03.wav`),
+    TI: new Audio(`${SERVER_URL}KALIMBA/TI_03.wav`),
+  },
 };
 
 function isInstrumentExists(instrument: Instrument): boolean {
@@ -44,13 +62,13 @@ function playAudio(instrument: Instrument, noteName: NoteName): void {
 }
 
 const NOTE_NAMES: NoteName[] = ["TI", "LA", "SOL", "FA", "MI", "RE", "DO"];
-const INSTRUMENTS: Instrument[] = ["PIANO", "SAXOPHONE"];
+const INSTRUMENTS: Instrument[] = ["PIANO", "GUITAR", "KALIMBA"];
 
 const sortNotesByColumn = (notes: Notes) => {
   return Object.values(notes).reduce((acc, note) => {
     (acc[note.columnCount] ||= []).push(note);
     return acc;
-  }, {} as Record<Column, NoteState[]>);
+  }, {} as Record<ColumnCount, NoteState[]>);
 };
 
 export {

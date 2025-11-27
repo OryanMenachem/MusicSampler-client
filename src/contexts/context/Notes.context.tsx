@@ -1,13 +1,16 @@
 import { createContext, useState } from "react";
-import type { NotesContext, Notes, NoteId } from "../types/types";
+import type {
+  NotesContext,
+  Notes,
+  NoteId,
+  ProviderProps,
+} from "../../types/types";
 
 export const notesContext = createContext<NotesContext | null>(null);
 
 export default function NotesProvider({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: ProviderProps): React.JSX.Element {
   const { notes, setNotes, toggleIsOn } = useGetNotesContextValue();
   return (
     <notesContext.Provider value={{ notes, setNotes, toggleIsOn }}>

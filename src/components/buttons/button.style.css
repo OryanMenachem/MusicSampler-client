@@ -1,4 +1,4 @@
-.controls-panel {
+.player-controls-layout {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,12 +9,12 @@
   border-bottom: 0.3rem solid var(--primary-color);
 }
 
-.transport-controls {
+.transport-controls-layout {
   display: flex;
   gap: 0.5rem;
 }
 
-.column-controls {
+.column-controls-layout {
   display: flex;
   gap: 0.5rem;
 }
@@ -32,18 +32,21 @@
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-/* 
-.instrument-selector--btn {
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-} */
+
 .PIANO {
-  background-image: url("../../../public/piano.png");
+  background-image: url("public/icons/buttons/instrument/piano.png");
 }
 
 .SAXOPHONE {
-  background-image: url("../../../public/saxophone.png");
+  background-image: url("public/icons/buttons/instrument/saxophone.png");
 }
+.GUITAR {
+  background-image: url("public/icons/buttons/instrument/guitar.png");
+}
+.KALIMBA {
+  background-image: url("public/icons/buttons/instrument/kalimba.png");
+}
+
 .add-column--btn,
 .remove-column--btn {
   display: flex;
@@ -59,13 +62,13 @@
   background-color: rgb(0, 128, 148, 0.2);
 }
 
-.loop-on {
-  background-image: url("../../../public/pause.png");
-}
+/* .loop-on {
+
+} */
 
 .play-toggle--btn.play {
-  background-image: url("../../../public/play-button\ \(2\).png");
+  background-image: url("public/icons/buttons/sound-control/play.png");
 }
 .play-toggle--btn.stop {
-  background-image: url("../../../public/pause.png");
+  background-image: url("public/icons/buttons/sound-control/pause.png");
 }

@@ -1,28 +1,24 @@
 import {
   NotesProvider,
-  ColumnsProvider,
-  ControlsPlayerProvider,
+  ColumnCountProvider,
   InstrumentProvider,
-  ActiveColumnProvider,
-  RestartProvider,
-} from "./index";
+  VolumeProvider,
+  TransportControlsProvider,
+} from "./context/index";
+import type { ProviderProps } from "../types/types";
 
 export default function AppProviders({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: ProviderProps): React.JSX.Element {
   return (
-    <RestartProvider>
-      <ActiveColumnProvider>
+    <VolumeProvider>
+      <TransportControlsProvider>
         <InstrumentProvider>
-          <ColumnsProvider>
-            <ControlsPlayerProvider>
-              <NotesProvider>{children}</NotesProvider>
-            </ControlsPlayerProvider>
-          </ColumnsProvider>
+          <ColumnCountProvider>
+            <NotesProvider>{children}</NotesProvider>
+          </ColumnCountProvider>
         </InstrumentProvider>
-      </ActiveColumnProvider>
-    </RestartProvider>
+      </TransportControlsProvider>
+    </VolumeProvider>
   );
 }

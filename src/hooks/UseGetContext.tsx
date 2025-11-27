@@ -2,21 +2,17 @@ import { useContext } from "react";
 import {
   notesContext,
   instrumentContext,
-  columnsContext,
-  controlsPlayerContext,
-  activeColumnContext,
-  restartContext,
-} from "../contexts/index";
+  columnCountContext,
+  transportControlsContext,
+} from "../contexts/context/index";
 import type { Contexs, ContextName } from "../types/types";
 
 export default function useGetContext(contextName: ContextName): Contexs {
   const contextsMap: Record<ContextName, Contexs | null> = {
     instrumentContext: useContext(instrumentContext),
-    columnsContext: useContext(columnsContext),
+    columnCountContext: useContext(columnCountContext),
     notesContext: useContext(notesContext),
-    controlsPlayerContext: useContext(controlsPlayerContext),
-    activeColumnContext: useContext(activeColumnContext),
-    restartContext: useContext(restartContext),
+    transportControlsContext: useContext(transportControlsContext),
   };
   const context = contextsMap[contextName];
   if (!context) {

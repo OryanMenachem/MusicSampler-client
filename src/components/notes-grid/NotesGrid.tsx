@@ -2,27 +2,25 @@ import { useGetContext } from "../../hooks";
 import Note from "../note/Note";
 import { NOTE_NAMES } from "../../utils/utils";
 import type {
-  ActiveColumnContext,
   ColumnsContext,
   InstrumentContext,
 } from "../../types/types";
 import "./notesGrid.style.css";
+import type { TransportControlsContext } from "../../contexts/context/TransportControls.context";
 
 export default function NotesGrid() {
   const { instrument } = useGetContext(
     "instrumentContext"
   ) as InstrumentContext;
-  const { columnCount: columns } = useGetContext(
-    "columnsContext"
-  ) as ColumnsContext;
-  const { activeColumnIndex: activeColumn } = useGetContext(
-    "activeColumnContext"
-  ) as ActiveColumnContext;
+  const { columnCount } = useGetContext("columnCountContext") as ColumnsContext;
+  const { state } = useGetContext(
+    "transportControlsContext"
+  ) as TransportControlsContext;
   return (
     <div className="notes-grid">
       {NOTE_NAMES.map((note) => (
         <div key={note} className="notes-grid-row">
-          {Array(columns)
+          {Array(columnCount)
             .fill(note)
             .map((n, i) => (
               <Note
@@ -31,7 +29,7 @@ export default function NotesGrid() {
                 instrument={instrument}
                 noteName={n}
                 columnCount={i + 1}
-                isActive={activeColumn === i + 1}
+                isActive={state.activeColumnIndex === i + 1}
               />
             ))}
         </div>

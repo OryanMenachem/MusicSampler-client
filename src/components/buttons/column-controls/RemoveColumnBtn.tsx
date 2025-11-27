@@ -8,7 +8,7 @@ import type {
 export default function RemoveColumnBtn(): React.JSX.Element {
   const { notes, setNotes } = useGetContext("notesContext") as NotesContext;
   const { columnCount: columns, setColumnCount: setColumns } = useGetContext(
-    "columnsContext"
+    "columnCountContext"
   ) as ColumnsContext;
   const handleClick = () => {
     handleRemoveColumn({ notes, setNotes, columns, setColumns });

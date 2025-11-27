@@ -1,21 +1,20 @@
+import type { TransportControlsContext } from "../../../contexts/context/TransportControls.context";
 import { useGetContext } from "../../../hooks";
-import type { ControlsPlayerContext } from "../../../types/types";
 
 export default function LoopToggleBtn(): React.JSX.Element {
-  const { setIsLoop, setIsPlaying, isLoop } = useGetContext(
-    "controlsPlayerContext"
-  ) as ControlsPlayerContext;
+  const { state, dispatch } = useGetContext(
+    "transportControlsContext"
+  ) as TransportControlsContext;
 
   const handleClick = () => {
-    setIsLoop((prev) => !prev);
-    setIsPlaying((prev) => !prev);
+    dispatch({ type: "TOGGLE_LOOP" });
   };
   return (
     <button
-      className={`btn loop-toggle--btn ${isLoop && "loop-on"}`}
+      className={`btn loop-toggle--btn ${state.isLooping && "loop-on"}`}
       onClick={handleClick}
     >
-      {!isLoop && "Loop"}
+      {state.isLooping ? "Loop On" : "Loop Off"}
     </button>
   );
 }

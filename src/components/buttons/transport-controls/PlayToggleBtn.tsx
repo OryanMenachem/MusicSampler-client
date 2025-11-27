@@ -1,18 +1,15 @@
+import type { TransportControlsContext } from "../../../contexts/context/TransportControls.context";
 import { useGetContext, usePlayer } from "../../../hooks";
-import type { ControlsPlayerContext, NotesContext } from "../../../types/types";
+
 
 export default function PlayToggleBtn(): React.JSX.Element {
-  const {
-    isPlaying: isPlay,
-    setIsPlaying: setIsPlay,
-    isLoop,
-  } = useGetContext("controlsPlayerContext") as ControlsPlayerContext;
-  const { notes } = useGetContext("notesContext") as NotesContext;
-  usePlayer({ notes, isPlaying: isPlay, isLoop });
-  const className = `btn play-toggle--btn ${isPlay ? "play" : "stop"}`;
+  const { state, dispatch } = useGetContext(
+    "transportControlsContext"
+  ) as TransportControlsContext;
+  usePlayer();
+  const className = `btn play-toggle--btn ${state.isPlaying ? "stop" : "play"}`;
   const handleClick = () => {
-    setIsPlay((prev) => !prev);
-    console.log(isPlay);
+    dispatch({ type: "TOGGLE_PLAY" });
   };
   return <button className={className} onClick={handleClick}></button>;
 }

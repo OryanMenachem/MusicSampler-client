@@ -1,6 +1,6 @@
 import type { NoteProps, NotesContext } from "../../types/types";
 import { useGetContext, useAddNote } from "../../hooks";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { playAudio } from "../../utils/utils";
 import "./note.style.css";
 
@@ -14,10 +14,11 @@ export default function Note({
   const { toggleIsOn } = useGetContext("notesContext") as NotesContext;
   const noteRef = useRef<HTMLDivElement>(null);
   const currentNote = useAddNote(noteId, instrument, noteName, column);
+  const [isHovered, setIsHovered] = useState(false);
   if (!currentNote) return <></>;
   const noteClassName = `note ${currentNote.isNoteOn ? noteName : "note-off"} ${
     isActive ? "active" : ""
-  }`;
+  } `;
 
   const handleNoteClick = () => {
     if (!noteRef.current) {
@@ -33,6 +34,10 @@ export default function Note({
       ref={noteRef}
       className={noteClassName}
       onClick={handleNoteClick}
-    ></div>
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {isHovered && noteName}
+    </div>
   );
 }

@@ -1,23 +1,15 @@
+import type { TransportControlsContext } from "../../../contexts/context/TransportControls.context";
 import { useGetContext } from "../../../hooks";
-import type {
-  NotesContext,
-  Notes,
-  ControlsPlayerContext,
-  ActiveColumnContext,
-} from "../../../types/types";
+import type { NotesContext, Notes } from "../../../types/types";
 
 export default function ResetBtn(): React.JSX.Element {
   const { notes, setNotes } = useGetContext("notesContext") as NotesContext;
-  const { setIsPlaying: setIsPlay } = useGetContext(
-    "controlsPlayerContext"
-  ) as ControlsPlayerContext;
-  const { setActiveColumnIndex: setActiveColumn } = useGetContext(
-    "activeColumnContext"
-  ) as ActiveColumnContext;
+  const { dispatch } = useGetContext(
+    "transportControlsContext"
+  ) as TransportControlsContext;
 
   const handleReset = (): void => {
-    setIsPlay(false);
-    setActiveColumn((prev) => (prev = 1));
+    dispatch({ type: "RESET" });
     const updatedNotes: Notes = {};
     for (const key in notes) {
       updatedNotes[key] = {

@@ -1,12 +1,12 @@
 import AppProviders from "./contexts/AppProviders";
 import NotesGrid from "./components/notes-grid/NotesGrid";
-import ControlsPanel from "./components/ControlsPanel";
+import PlayerControlsLayout from "./components/PlayerControlsLayout";
 function App() {
   return (
     <>
       <AppProviders>
         <NotesGrid />
-        <ControlsPanel />
+        <PlayerControlsLayout />
       </AppProviders>
     </>
   );

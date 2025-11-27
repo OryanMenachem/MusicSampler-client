@@ -1,8 +1,9 @@
 import type { Dispatch, SetStateAction } from "react";
+import type { TransportControlsContext } from "../contexts/context/TransportControls.context";
 
 type NoteName = "DO" | "RE" | "MI" | "FA" | "SOL" | "LA" | "TI";
 
-type Instrument = "PIANO" | "SAXOPHONE";
+type Instrument = "PIANO" | "SAXOPHONE" | "GUITAR" | "KALIMBA";
 
 type NoteAudioMap = Partial<
   Record<Instrument, Partial<Record<NoteName, HTMLAudioElement>>>
@@ -15,7 +16,7 @@ type Notes = Record<NoteId, NoteState>;
 type IsActive = boolean;
 type SetColumnCount = Dispatch<SetStateAction<ColumnCount>>;
 type CurrentColumn = number;
-type SetCurrentColumn = Dispatch<SetStateAction<CurrentColumn>>;
+// type SetCurrentColumn = Dispatch<SetStateAction<CurrentColumn>>;
 
 type NoteProps = {
   noteId: NoteId;
@@ -79,26 +80,32 @@ interface HandleRemoveColumnArgs {
 
 interface UsePlayerProps {
   notes?: Notes;
-  isLoop?: IsLoop;
-  isPlaying: IsPlaying;
+  isLooping?: IsLoop;
+  isPlaying?: IsPlaying;
 }
 
 type ContextName =
   | "instrumentContext"
-  | "columnsContext"
+  | "columnCountContext"
   | "notesContext"
-  | "controlsPlayerContext"
-  | "activeColumnContext"
-  | "restartContext";
+  | "transportControlsContext";
 
 type Contexs =
   | NotesContext
   | ColumnsContext
   | InstrumentContext
-  | ControlsPlayerContext
-  | ActiveColumnContext
-  | RestartContext;
+  | TransportControlsContext;
 
+type Volume = number;
+type SetVolume = Dispatch<SetStateAction<Volume>>;
+interface VolumeContext {
+  volume: Volume;
+  setVolume: SetVolume;
+}
+
+interface ProviderProps {
+  children: React.ReactNode;
+}
 export type {
   RestartContext,
   NoteProps,
@@ -112,11 +119,13 @@ export type {
   InstrumentContext,
   ColumnsContext,
   HandleRemoveColumnArgs,
-  ColumnCount as Column,
+  ColumnCount,
   ContextName,
   Contexs,
   ControlsPlayerContext,
   UsePlayerProps,
   ActiveColumnContext,
-  ActiveColumnIndex as ActiveColumn,
+  ActiveColumnIndex,
+  VolumeContext,
+  ProviderProps,
 };
