@@ -46,6 +46,11 @@ function transportControlsReducer(
         ...state,
         currentPlayingColumnIndex: action.payload,
       };
+    case "SET_MASTER_VOLUME":
+      return {
+        ...state,
+        masterVolume: action.payload,
+      };
     default:
       throw new Error(`Unknown action type: ${action.type}`);
   }

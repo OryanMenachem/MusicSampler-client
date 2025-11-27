@@ -25,7 +25,7 @@ export default function usePlayer() {
           dispatch({ type: "SET_ACTIVE_COLUMN", payload: Number(column) });
           for (const note of notesColumn) {
             if (!note.isNoteOn) continue;
-            playAudio(instrument, note.noteName);
+            playAudio(instrument, note.noteName, state.masterVolume);
           }
           await new Promise((res) => setTimeout(res, 250));
         }
@@ -38,5 +38,5 @@ export default function usePlayer() {
     return () => {
       cancelled = true;
     };
-  }, [state.isPlaying, state.restart, state.isLooping]);
+  }, [state.isPlaying, state.restart, state.isLooping, state.masterVolume]);
 }

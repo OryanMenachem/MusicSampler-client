@@ -9,6 +9,9 @@
   border-bottom: 0.3rem solid var(--primary-color);
 }
 
+#volume-control {
+  color: var(--primary-color);
+}
 .transport-controls-layout {
   display: flex;
   gap: 0.5rem;
@@ -37,9 +40,9 @@
   background-image: url("public/icons/buttons/instrument/piano.png");
 }
 
-.SAXOPHONE {
+/* .SAXOPHONE {
   background-image: url("public/icons/buttons/instrument/saxophone.png");
-}
+} */
 .GUITAR {
   background-image: url("public/icons/buttons/instrument/guitar.png");
 }

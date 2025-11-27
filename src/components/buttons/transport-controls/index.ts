@@ -2,5 +2,5 @@ import PlayToggleBtn from "./PlayToggleBtn";
 import LoopToggleBtn from "./LoopToggleBtn";
 import RestartBtn from "./RestartBtn";
 import ResetBtn from "./ResetBtn";
-
-export { PlayToggleBtn, LoopToggleBtn, ResetBtn, RestartBtn };
+import MasterVolume from "./MasterVolume";
+export { PlayToggleBtn, LoopToggleBtn, ResetBtn, RestartBtn, MasterVolume };

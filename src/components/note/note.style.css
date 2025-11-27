@@ -18,7 +18,7 @@
 }
 
 .note.active {
-    background-color: rgb(0, 128, 148, 0.2);
+  background-color: rgb(0, 128, 148, 0.2);
 }
 
 .note-off {
@@ -47,7 +47,6 @@
   background-color: var(--TI-color);
 }
 
-
 .DO:hover {
   background-color: var(--DO-color);
 }
@@ -69,4 +68,3 @@
 .TI:hover {
   background-color: var(--TI-color);
 }
-

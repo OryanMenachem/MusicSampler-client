@@ -51,13 +51,19 @@ function isNoteNameExists(instrument: Instrument, noteName: NoteName): boolean {
   );
 }
 
-function playAudio(instrument: Instrument, noteName: NoteName): void {
+function playAudio(
+  instrument: Instrument,
+  noteName: NoteName,
+  volume?: number
+): void {
   if (!isNoteNameExists(instrument, noteName)) {
     throw Error("Note name does not exist in noteAudioMap");
   }
   const audio = noteAudioMap[instrument]![
     noteName
   ]!.cloneNode() as HTMLAudioElement;
+
+  audio.volume = volume ?? 1;
   audio.play();
 }
 

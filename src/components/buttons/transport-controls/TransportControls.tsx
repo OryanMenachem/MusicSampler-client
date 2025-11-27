@@ -1,4 +1,4 @@
-import { PlayToggleBtn, LoopToggleBtn, RestartBtn, ResetBtn } from "./index";
+import { PlayToggleBtn, LoopToggleBtn, RestartBtn, ResetBtn ,  MasterVolume} from "./index";
 
 export default function TransportControlsLayout(): React.JSX.Element {
   return (
@@ -7,6 +7,7 @@ export default function TransportControlsLayout(): React.JSX.Element {
       <LoopToggleBtn />
       <RestartBtn />
       <ResetBtn />
+      <MasterVolume />
     </div>
   );
 }

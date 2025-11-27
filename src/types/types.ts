@@ -30,16 +30,21 @@ export interface TransportControlsContext {
   state: TransportControlsState;
   dispatch: React.Dispatch<any>;
 }
-// export type TransportControlsAction =
-//   | { type: "TOGGLE_PLAY" }
-//   | { type: "TOGGLE_LOOP" }
-//   | { type: "RESTART" }
-//   | { type: "RESET" };
+export type TransportControlsAction = {
+  type:
+    | "TOGGLE_PLAY"
+    | "TOGGLE_LOOP"
+    | "RESTART"
+    | "RESET"
+    | "SET_MASTER_VOLUME"
+    | "SET_ACTIVE_COLUMN";
+  payload?: number;
+};
 
 export interface TransportControlsReducerArgs {
   state: TransportControlsState;
   action: Dispatch<any>;
-}  
+}
 
 // --- Transport Controls types ---- //
 
