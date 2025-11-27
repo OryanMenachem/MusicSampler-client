@@ -1,4 +1,4 @@
-import type { TransportControlsContext } from "../../../contexts/context/TransportControls.context";
+import type { TransportControlsContext } from "../../../types/types";
 import { useGetContext } from "../../../hooks";
 
 export default function RestartBtn(): React.JSX.Element {

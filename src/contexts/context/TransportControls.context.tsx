@@ -1,30 +1,20 @@
 import { createContext, useReducer } from "react";
-import type { ProviderProps } from "../../types/types";
-
-type IsPlaying = boolean;
-type IsLooping = boolean;
-type Restart = boolean;
-type ActiveColumnIndex = number;
-
-export interface TransportControlsState {
-  isPlaying: IsPlaying;
-  isLooping: IsLooping;
-  restart: Restart;
-  activeColumnIndex: ActiveColumnIndex;
-}
-export interface TransportControlsContext {
-  state: TransportControlsState;
-  dispatch: React.Dispatch<any>;
-}
+import type {
+  ProviderProps,
+  TransportControlsState,
+  TransportControlsContext,
+} from "../../types/types";
 
 const initialTransportControlsState: TransportControlsState = {
   isPlaying: false,
   isLooping: false,
   restart: false,
-  activeColumnIndex: 0,
+  tempoBPM: 120,
+  masterVolume: 0.8,
+  currentPlayingColumnIndex: -1,
 };
 
-function reducer(
+function transportControlsReducer(
   state: TransportControlsState,
   action: any
 ): TransportControlsState {
@@ -36,14 +26,12 @@ function reducer(
         ...state,
         isLooping: !state.isLooping,
       };
-    case "SET_ACTIVE_COLUMN":
-      return { ...state, activeColumnIndex: action.payload };
     case "RESTART":
       return {
         ...state,
         isPlaying: false,
         restart: true,
-        activeColumnIndex: 0,
+        currentPlayingColumnIndex: -1,
       };
     case "RESET":
       return {
@@ -51,10 +39,15 @@ function reducer(
         isPlaying: false,
         isLooping: false,
         restart: false,
-        activeColumnIndex: 0,
+        currentPlayingColumnIndex: -1,
+      };
+    case "SET_ACTIVE_COLUMN":
+      return {
+        ...state,
+        currentPlayingColumnIndex: action.payload,
       };
     default:
-      throw new Error("Unknown action type");
+      throw new Error(`Unknown action type: ${action.type}`);
   }
 }
 
@@ -62,7 +55,10 @@ export const transportControlsContext =
   createContext<TransportControlsContext | null>(null);
 
 export default function TransportControlsProvider({ children }: ProviderProps) {
-  const [state, dispatch] = useReducer(reducer, initialTransportControlsState);
+  const [state, dispatch] = useReducer(
+    transportControlsReducer,
+    initialTransportControlsState
+  );
   return (
     <transportControlsContext.Provider value={{ state, dispatch }}>
       {children}

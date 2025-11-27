@@ -1,5 +1,47 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { TransportControlsContext } from "../contexts/context/TransportControls.context";
+
+// --- Column  types  --- //
+interface ColumnCountContext {
+  columnCount: ColumnCount;
+  setColumnCount: SetColumnCount;
+}
+
+type ColumnCount = number;
+type SetColumnCount = React.Dispatch<React.SetStateAction<ColumnCount>>;
+
+// --- Column  types---- //
+
+// --- Transport Controls types  --- //
+type IsPlaying = boolean;
+type IsLooping = boolean;
+type Restart = boolean;
+type TempoBPM = number;
+type MasterVolume = number;
+type CurrentPlayingColumnIndex = number;
+export interface TransportControlsState {
+  isPlaying: IsPlaying;
+  isLooping: IsLooping;
+  restart: Restart;
+  tempoBPM: TempoBPM;
+  masterVolume: MasterVolume;
+  currentPlayingColumnIndex: CurrentPlayingColumnIndex;
+}
+export interface TransportControlsContext {
+  state: TransportControlsState;
+  dispatch: React.Dispatch<any>;
+}
+// export type TransportControlsAction =
+//   | { type: "TOGGLE_PLAY" }
+//   | { type: "TOGGLE_LOOP" }
+//   | { type: "RESTART" }
+//   | { type: "RESET" };
+
+export interface TransportControlsReducerArgs {
+  state: TransportControlsState;
+  action: Dispatch<any>;
+}  
+
+// --- Transport Controls types ---- //
 
 type NoteName = "DO" | "RE" | "MI" | "FA" | "SOL" | "LA" | "TI";
 
@@ -10,13 +52,9 @@ type NoteAudioMap = Partial<
 >;
 
 type IsNoteOn = boolean;
-type ColumnCount = number;
 type NoteId = string;
 type Notes = Record<NoteId, NoteState>;
 type IsActive = boolean;
-type SetColumnCount = Dispatch<SetStateAction<ColumnCount>>;
-type CurrentColumn = number;
-// type SetCurrentColumn = Dispatch<SetStateAction<CurrentColumn>>;
 
 type NoteProps = {
   noteId: NoteId;
@@ -30,70 +68,35 @@ interface NoteState {
   columnCount: ColumnCount;
 }
 
-type Restart = boolean;
-type SetRestart = Dispatch<SetStateAction<Restart>>;
-
-interface RestartContext {
-  restart: Restart;
-  setRestart: SetRestart;
-}
-
 interface NotesContext {
   notes: Notes;
   setNotes: Dispatch<SetStateAction<Notes>>;
   toggleIsOn: (noteId: NoteId) => void;
 }
-interface ColumnsContext {
-  columnCount: ColumnCount;
-  setColumnCount: SetColumnCount;
-}
-interface InstrumentContext {
+interface InstrumentSelectorContext {
   instrument: Instrument;
-  setInstrument: Dispatch<SetStateAction<Instrument>>;
+  dispatch: React.Dispatch<any>;
 }
 
-type IsLoop = boolean;
-type SetIsLoop = Dispatch<SetStateAction<boolean>>;
-type IsPlaying = boolean;
-type SetIsPlaying = Dispatch<SetStateAction<boolean>>;
-
-interface ControlsPlayerContext {
-  isLoop: IsLoop;
-  setIsLoop: SetIsLoop;
-  isPlaying: IsPlaying;
-  setIsPlaying: SetIsPlaying;
-}
 type ActiveColumnIndex = number | null;
-type SetActiveColumnIndex = Dispatch<SetStateAction<ActiveColumnIndex | null>>;
-
-interface ActiveColumnContext {
-  activeColumnIndex: ActiveColumnIndex;
-  setActiveColumnIndex: SetActiveColumnIndex;
-}
 
 interface HandleRemoveColumnArgs {
   notes: Notes;
   setNotes: Dispatch<SetStateAction<Notes>>;
-  columns: ColumnCount;
-  setColumns: Dispatch<SetStateAction<ColumnCount>>;
-}
-
-interface UsePlayerProps {
-  notes?: Notes;
-  isLooping?: IsLoop;
-  isPlaying?: IsPlaying;
+  columnCount: ColumnCount;
+  setColumnCount: SetColumnCount;
 }
 
 type ContextName =
-  | "instrumentContext"
+  | "instrumentSelectorContext"
   | "columnCountContext"
   | "notesContext"
   | "transportControlsContext";
 
 type Contexs =
   | NotesContext
-  | ColumnsContext
-  | InstrumentContext
+  | ColumnCountContext
+  | InstrumentSelectorContext
   | TransportControlsContext;
 
 type Volume = number;
@@ -107,7 +110,6 @@ interface ProviderProps {
   children: React.ReactNode;
 }
 export type {
-  RestartContext,
   NoteProps,
   Notes,
   NoteName,
@@ -116,15 +118,12 @@ export type {
   NoteId,
   NoteAudioMap,
   NoteState,
-  InstrumentContext,
-  ColumnsContext,
+  InstrumentSelectorContext,
+  ColumnCountContext,
   HandleRemoveColumnArgs,
   ColumnCount,
   ContextName,
   Contexs,
-  ControlsPlayerContext,
-  UsePlayerProps,
-  ActiveColumnContext,
   ActiveColumnIndex,
   VolumeContext,
   ProviderProps,

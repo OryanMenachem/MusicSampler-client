@@ -1,17 +1,21 @@
 import { useGetContext } from "../../../hooks";
 import type {
   NotesContext,
-  ColumnsContext,
+  ColumnCountContext,
   HandleRemoveColumnArgs,
 } from "../../../types/types";
 
 export default function RemoveColumnBtn(): React.JSX.Element {
   const { notes, setNotes } = useGetContext("notesContext") as NotesContext;
-  const { columnCount: columns, setColumnCount: setColumns } = useGetContext(
-    "columnCountContext"
-  ) as ColumnsContext;
+  const { columnCount, setColumnCount } = useGetContext("columnCountContext") as ColumnCountContext;
+
   const handleClick = () => {
-    handleRemoveColumn({ notes, setNotes, columns, setColumns });
+    handleRemoveColumn({
+      notes,
+      setNotes,
+      columnCount,
+      setColumnCount,
+    });
   };
   const minusSign = "-";
   return (
@@ -24,16 +28,16 @@ export default function RemoveColumnBtn(): React.JSX.Element {
 const handleRemoveColumn = ({
   notes,
   setNotes,
-  columns,
-  setColumns,
+  columnCount,
+  setColumnCount,
 }: HandleRemoveColumnArgs) => {
   const initialColumns = 32;
-  if (columns === initialColumns) {
+  if (columnCount === initialColumns) {
     return;
   }
   for (const noteId in notes) {
     const note = notes[noteId];
-    if (note.columnCount === columns && note.isNoteOn) {
+    if (note.columnCount === columnCount && note.isNoteOn) {
       setNotes((prev) => {
         const newNotes = { ...prev };
         delete newNotes[noteId];
@@ -41,5 +45,6 @@ const handleRemoveColumn = ({
       });
     }
   }
-  setColumns((prev) => prev - 1);
+  setColumnCount((prev) => prev - 1);
 };
+  

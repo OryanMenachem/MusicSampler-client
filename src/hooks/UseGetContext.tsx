@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import {
   notesContext,
-  instrumentContext,
+  instrumentSelectorContext,
   columnCountContext,
   transportControlsContext,
 } from "../contexts/context/index";
@@ -9,7 +9,7 @@ import type { Contexs, ContextName } from "../types/types";
 
 export default function useGetContext(contextName: ContextName): Contexs {
   const contextsMap: Record<ContextName, Contexs | null> = {
-    instrumentContext: useContext(instrumentContext),
+    instrumentSelectorContext: useContext(instrumentSelectorContext),
     columnCountContext: useContext(columnCountContext),
     notesContext: useContext(notesContext),
     transportControlsContext: useContext(transportControlsContext),

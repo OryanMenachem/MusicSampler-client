@@ -1,12 +1,16 @@
-import type { TransportControlsContext } from "../../../contexts/context/TransportControls.context";
+import type {
+  TransportControlsContext,
+  NotesContext,
+  Notes,
+} from "../../../types/types";
 import { useGetContext } from "../../../hooks";
-import type { NotesContext, Notes } from "../../../types/types";
 
 export default function ResetBtn(): React.JSX.Element {
   const { notes, setNotes } = useGetContext("notesContext") as NotesContext;
   const { dispatch } = useGetContext(
     "transportControlsContext"
   ) as TransportControlsContext;
+
 
   const handleReset = (): void => {
     dispatch({ type: "RESET" });
@@ -19,7 +23,6 @@ export default function ResetBtn(): React.JSX.Element {
     }
     setNotes(updatedNotes);
   };
-
   return (
     <button className="btn reset--btn" onClick={handleReset}>
       Reset

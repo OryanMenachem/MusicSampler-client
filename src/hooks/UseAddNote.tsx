@@ -3,7 +3,7 @@ import type {
   NoteId,
   Instrument,
   NoteName,
-  Column,
+  ColumnCount,
   NotesContext,
   NoteState,
 } from "../types/types";
@@ -13,7 +13,7 @@ export default function useAddNote(
   noteId: NoteId,
   instrument: Instrument,
   noteName: NoteName,
-  column: Column
+  column: ColumnCount
 ): NoteState {
   const { notes, setNotes } = useGetContext("notesContext") as NotesContext;
   useEffect(() => {

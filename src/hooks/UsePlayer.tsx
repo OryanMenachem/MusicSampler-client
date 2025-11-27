@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { sortNotesByColumn, playAudio } from "../utils/utils";
-import type { InstrumentContext, NotesContext } from "../types/types";
+import type { InstrumentSelectorContext, NotesContext } from "../types/types";
 import useGetContext from "./UseGetContext";
-import type { TransportControlsContext } from "../contexts/context/TransportControls.context";
+import type { TransportControlsContext } from "../types/types";
 
 export default function usePlayer() {
   const { state, dispatch } = useGetContext(
@@ -10,8 +10,8 @@ export default function usePlayer() {
   ) as TransportControlsContext;
   const { notes } = useGetContext("notesContext") as NotesContext;
   const { instrument } = useGetContext(
-    "instrumentContext"
-  ) as InstrumentContext;
+    "instrumentSelectorContext"
+  ) as InstrumentSelectorContext;
 
   useEffect(() => {
     if (!state.isPlaying && !state.isLooping) return;

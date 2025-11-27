@@ -1,17 +1,37 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
 import type {
   Instrument,
-  InstrumentContext,
+  InstrumentSelectorContext,
   ProviderProps,
 } from "../../types/types";
+import { INSTRUMENTS } from "../../utils/utils";
 
-export const instrumentContext = createContext<InstrumentContext | null>(null);
+const initialInstrumentSelectorState = {
+  instrument: "PIANO" as Instrument,
+};
 
-export default function InstrumentProvider({ children }: ProviderProps) {
-  const [instrument, setInstrument] = useState<Instrument>("PIANO");
+function reducer(state: { instrument: Instrument }, action: any): any {
+  switch (action.type) {
+    case "CHANGE_INSTRUMENT":
+      const currentIndex = INSTRUMENTS.indexOf(state.instrument);
+      const nextIndex = (currentIndex + 1) % INSTRUMENTS.length;
+      return { ...state, instrument: INSTRUMENTS[nextIndex] };
+    default:
+      throw new Error("Unknown action type");
+  }
+}
+
+
+export const instrumentSelectorContext =
+  createContext<InstrumentSelectorContext | null>(null);
+
+export default function InstrumentSelectorProvider({
+  children,
+}: ProviderProps) {
+  const [state, dispatch] = useReducer(reducer, initialInstrumentSelectorState);
   return (
-    <instrumentContext.Provider value={{ instrument, setInstrument }}>
+    <instrumentSelectorContext.Provider value={{ instrument: state.instrument, dispatch}}>
       {children}
-    </instrumentContext.Provider>
+    </instrumentSelectorContext.Provider>
   );
 }

@@ -1,21 +1,19 @@
 import NotesProvider, { notesContext } from "./Notes.context";
 import ColumnCountProvider, { columnCountContext } from "./ColumnCount.context";
-
-import InstrumentProvider, { instrumentContext } from "./Instrument.context";
-
-import VolumeProvider, { volumeContext } from "./Volume.context";
+import InstrumentSelectorProvider, {
+  instrumentSelectorContext,
+} from "./Instrument.context";
 import TransportControlsProvider, {
   transportControlsContext,
 } from "./TransportControls.context";
+
 export {
   notesContext,
   columnCountContext,
-  instrumentContext,
-  volumeContext,
+  instrumentSelectorContext,
   transportControlsContext,
-  VolumeProvider,
   NotesProvider,
   ColumnCountProvider,
-  InstrumentProvider,
+  InstrumentSelectorProvider,
   TransportControlsProvider,
 };
